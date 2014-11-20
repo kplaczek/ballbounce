@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ball bounce index page</title>
+        <meta charset="UTF-8">
+        <script type="text/javascript">
+            var BallBounce = {};
+        </script>
+        <style>
+            canvas {border: 1px solid black;}
+        </style>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="js/canvas.js"></script>
+        <script src="js/game.js"></script>
+        <script src="js/vector.js"></script>
+        <script src="js/ball.js"></script>
+        <script type="text/javascript">
+            window.onload = function() {
+
+                game = new Game();
+                canvas = new Canvas();
+                game.setCanvas(canvas);
+                
+                var balls = [];
+
+                ball = new Ball(10, 20);
+                ball2 = new Ball(-39, 20, 40);
+
+                game.add(ball);
+                game.add(ball2);
+
+                setInterval(game.update, 20);
+            };
+        </script>
+    </head>
+    <body>
+        <canvas id="canvas" width="200" height="200"></canvas>
+    </body>
+</html>
