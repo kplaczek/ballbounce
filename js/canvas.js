@@ -1,16 +1,21 @@
 function Canvas() {
     var canvas = document.getElementById('canvas');
     this.ctx = canvas.getContext('2d');
-    this.offsetX = 100;
-    this.offsetY = 100;
-    
-    
-    
+    this.height = canvas.height;
+    this.width = canvas.width;
+    this.offsetX = this.width / 2;
+    this.offsetY = this.height / 2;
+    this.boundaries = {top: -this.offsetY,
+        bottom: this.height - this.offsetY,
+        left: -this.offsetX,
+        right: this.width - this.offsetX
+    };
+
     this.ctx.translate(this.offsetX, this.offsetY);
 
     this.left = canvas.offsetLeft;
     this.top = canvas.offsetTop;
-    
+
 
     this.balls = [];
     canvas.addEventListener('click', this.click, true);
@@ -23,7 +28,7 @@ Canvas.prototype.click = function(event) {
 };
 
 Canvas.prototype.clear = function() {
-    this.ctx.clearRect(-100, -100, 200, 200);
+    this.ctx.clearRect(this.boundaries.left, this.boundaries.top, this.width, this.height);
 }
 
 Canvas.prototype.draw = function(object) {

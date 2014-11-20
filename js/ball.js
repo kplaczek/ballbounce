@@ -26,10 +26,10 @@ Ball.prototype.move = function() {
 };
 
 Ball.prototype.boardColliding = function() {
-    if (this.getX() - this.radius < -100 || this.getX() + this.radius > 100)
+    if (this.getX() - this.radius < canvas.boundaries.left || this.getX() + this.radius > canvas.boundaries.right)
         this.velocity = this.velocity.multiply(new Vector(-1, 1, 1));
 
-    if (this.getY() - this.radius < -100 || this.getY() + this.radius > 100)
+    if (this.getY() - this.radius < canvas.boundaries.top || this.getY() + this.radius > canvas.boundaries.bottom)
         this.velocity = this.velocity.multiply(new Vector(1, -1, 1));
 };
 
