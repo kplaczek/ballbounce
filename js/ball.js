@@ -1,12 +1,19 @@
 function Ball(x, y, radius, mass) {
 
     this.position = new Vector(x, y);
-    this.velocity = new Vector(1.2, 2.4);
+    this.velocity = new Vector((Math.random() * -4) + 2, (Math.random() * -4) + 2);
     this.radius = radius || 10;
     this.mass = mass || 1;
     this.objectName = 'Ball';
+    this.energy = (this.getMass() * this.velocity.length() * this.velocity.length()) / 2;
+    this.color = [Math.round(Math.random()*255), Math.round(Math.random()*255), Math.round(Math.random()*255)];
+
 }
 
+Ball.prototype.getEnergy = function() {
+    this.energy = (this.getMass() * this.velocity.length() * this.velocity.length()) / 2;
+    return this.energy;
+}
 
 Ball.prototype.getX = function() {
     return this.position.x;

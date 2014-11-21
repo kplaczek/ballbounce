@@ -22,19 +22,11 @@
                 canvas = new Canvas();
                 game.setCanvas(canvas);
                 
-                var balls = [];
-
-                ball = new Ball(10, 20);
-                ball2 = new Ball(-39, 20, 40);
-
-                game.add(ball);
-                game.add(ball2);
-
-                setInterval(game.update, 20);
+                setInterval(game.update, 25);
             };
         </script>
     </head>
     <body>
-        <canvas id="canvas" width="200" height="200"></canvas>
+        <canvas id="canvas" width="400" height="300"></canvas>
     </body>
 </html>
