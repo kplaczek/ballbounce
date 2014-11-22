@@ -1,12 +1,11 @@
 function Ball(x, y, radius, mass) {
 
     this.position = new Vector(x, y);
-    this.velocity = new Vector((Math.random() * -4) + 2, (Math.random() * -4) + 2);
+    this.velocity = new Vector((Math.random() * -2) + 0.5, (Math.random() * -2) + 0.5);
     this.radius = radius || 10;
     this.mass = mass || 1;
     this.objectName = 'Ball';
     this.energy = (this.getMass() * this.velocity.length() * this.velocity.length()) / 2;
-    this.color = [Math.round(Math.random()*255), Math.round(Math.random()*255), Math.round(Math.random()*255)];
 
 }
 

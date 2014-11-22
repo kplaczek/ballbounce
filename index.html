@@ -29,6 +29,7 @@
 
 
                 setInterval(game.update, 16);
+                setInterval(game.calculate, 8);
                 var fpsOut = document.getElementById('fps');
                 setInterval(function() {
                     fpsOut.innerHTML = (1000 / frameTime).toFixed(1) + " fps";

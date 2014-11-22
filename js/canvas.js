@@ -25,8 +25,26 @@ function Canvas() {
 Canvas.prototype.click = function(event) {
     var x = event.pageX - canvas.left - canvas.offsetX;
     var y = event.pageY - canvas.top - canvas.offsetY;
-    var newMass = Math.round(Math.random() * 30) + 1;
-    game.add(new Ball(x, y, newMass, newMass));
+
+    var point = new Vector(x, y);
+    //ball clicked flag set to false
+    onBallClick = false;
+    //check if any ball has been clickd 
+    for (i in game.balls) {
+        delta = game.balls[i].position.subtract(point);
+        length = delta.length();
+        if (length < game.balls[i].getRadius()) {
+            game.balls.splice(i, 1);
+            //it is set flag to true 
+            onBallClick = true;
+        }
+    }
+
+    //ball has been clicked so dont add new ball to the set 
+    if (!onBallClick) {
+        var newMass = Math.round(Math.random() * 30) + 1;
+        game.add(new Ball(x, y, newMass, newMass));
+    }
 };
 
 Canvas.prototype.clear = function() {
@@ -38,7 +56,7 @@ Canvas.prototype.draw = function(object) {
     for (ball in game.balls) {
         var object = game.balls[ball];
         this.ctx.beginPath();
-        this.ctx.fillStyle = "rgba(" + game.balls[ball].color[0] + "," + game.balls[ball].color[1] + "," + game.balls[ball].color[2] + ", 0.8 )";
+        this.ctx.fillStyle = "rgba(255, 0, 0, " + ((0.9 * object.getEnergy() / game.maxEnergy) + 0.1) + ")";
         this.ctx.arc(object.getX(), object.getY(), object.getRadius(), 0, Math.PI * 2);
         this.ctx.fill();
     }

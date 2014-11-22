@@ -3,6 +3,8 @@
 function Game() {
     this.balls = [];
     this.canvas = null;
+    this.maxEnergy = 0;
+    this.totalEnergy = 0;
 }
 Game.prototype.setCanvas = function(canvas) {
     this.canvas = canvas;
@@ -14,11 +16,14 @@ Game.prototype.add = function(ball) {
 
 
 Game.prototype.update = function() {
-    totalEnergy = 0;
     var thisFrameTime = (thisLoop = new Date) - lastLoop;
     frameTime += (thisFrameTime - frameTime) / filterStrength;
     lastLoop = thisLoop;
+    game.canvas.draw();
+};
 
+Game.prototype.calculate = function() {
+    game.maxEnergy = game.totalEnergy = 0;
     for (var i = 0, e = game.balls.length; i < e; i++) {
         for (var j = i + 1, e = game.balls.length; j < e; j++) {
 
@@ -57,12 +62,13 @@ Game.prototype.update = function() {
 
             }
         }
-        game.balls[i].getEnergy();
-        totalEnergy += game.balls[i].getEnergy();
+        
+        game.maxEnergy = Math.max(game.balls[i].getEnergy(), game.maxEnergy);
+        game.totalEnergy += game.balls[i].getEnergy();
         game.balls[i].boardColliding();
         game.balls[i].move();
 
     }
-
-    game.canvas.draw();
+    console.info(game.maxEnergy);
+    
 };
