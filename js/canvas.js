@@ -19,8 +19,14 @@ function Canvas() {
 
     this.balls = [];
     canvas.addEventListener('click', this.click, true);
+    canvas.addEventListener('mousemove', this.mousemove, true);
 
 }
+Canvas.prototype.mousemove = function(event) {
+    var cursorX = event.pageX - canvas.left - canvas.offsetX;
+    var cursorY = event.pageY - canvas.top - canvas.offsetY;
+    game.turret.calculateTurret(cursorX, cursorY);
+};
 
 Canvas.prototype.click = function(event) {
     var x = event.pageX - canvas.left - canvas.offsetX;
@@ -43,7 +49,10 @@ Canvas.prototype.click = function(event) {
     //ball has been clicked so dont add new ball to the set 
     if (!onBallClick) {
         var newMass = Math.round(Math.random() * 30) + 1;
-        game.add(new Ball(x, y, Math.round(newMass)), Math.round(newMass));
+//        var ball = new Ball(game.turret.turretEndCoordinates.x, game.turret.turretEndCoordinates.y, Math.round(newMass), Math.round(newMass));
+        var ball = new Ball(game.turret.turretEndCoordinates.x, game.turret.turretEndCoordinates.y,game.bulletSize, game.bulleMass);
+        ball.velocity = game.turret.direction.negative().multiply(4);
+        game.add(ball);
     }
 };
 
@@ -60,4 +69,15 @@ Canvas.prototype.draw = function(object) {
         this.ctx.arc(object.getX(), object.getY(), object.getRadius(), 0, Math.PI * 2);
         this.ctx.fill();
     }
+    this.drawTurret();
 };
+
+Canvas.prototype.drawTurret = function() {
+    this.ctx.beginPath();
+
+    //draw a line
+    this.ctx.moveTo(game.turret.baseCoordinates.x, game.turret.baseCoordinates.y);
+    this.ctx.lineTo(game.turret.turretEndCoordinates.x, game.turret.turretEndCoordinates.y);
+    this.ctx.stroke();
+};
+

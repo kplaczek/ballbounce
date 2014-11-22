@@ -1,19 +1,24 @@
-
-
 function Game() {
     this.balls = [];
     this.canvas = null;
     this.maxEnergy = 0;
     this.totalEnergy = 0;
+    this.turret = null;
+    this.bulletSize = 4;
+    this.bulletMass = 30;
 }
+
 Game.prototype.setCanvas = function(canvas) {
     this.canvas = canvas;
-}
+};
 
 Game.prototype.add = function(ball) {
     this.balls.push(ball);
-}
+};
 
+Game.prototype.setTurret = function(turret) {
+    this.turret = turret;
+};
 
 Game.prototype.update = function() {
     var thisFrameTime = (thisLoop = new Date) - lastLoop;
@@ -62,7 +67,7 @@ Game.prototype.calculate = function() {
 
             }
         }
-        
+
         game.maxEnergy = Math.max(game.balls[i].getEnergy(), game.maxEnergy);
         game.totalEnergy += game.balls[i].getEnergy();
         game.balls[i].boardColliding();

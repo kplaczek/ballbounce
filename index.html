@@ -15,17 +15,35 @@
         <script src="js/game.js"></script>
         <script src="js/vector.js"></script>
         <script src="js/ball.js"></script>
+        <script src="js/turret.js"></script>
         <script type="text/javascript">
             window.onload = function() {
 
                 game = new Game();
                 canvas = new Canvas();
                 game.setCanvas(canvas);
+                turret = new Turret();
+                game.setTurret(turret);
 
                 filterStrength = 20;
                 frameTime = 0;
                 lastLoop = new Date;
                 thisLoop = 0;
+
+
+                //manual "oponents"
+                oponent = new Ball(0, -250, 100, 200);
+                oponent.velocity = new Vector(0, 0.05);
+
+                oponent2 = new Ball(-400, -250, 100, 200);
+                oponent2.velocity = new Vector(0.05, 0.05);
+
+                oponent3 = new Ball(400, -250, 100, 200);
+                oponent3.velocity = new Vector(-0.05, 0.05);
+
+                game.add(oponent);
+                game.add(oponent2);
+                game.add(oponent3);
 
 
                 setInterval(game.update, 16);
