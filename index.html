@@ -21,12 +21,26 @@
                 game = new Game();
                 canvas = new Canvas();
                 game.setCanvas(canvas);
-                
-                setInterval(game.update, 25);
+
+                filterStrength = 20;
+                frameTime = 0;
+                lastLoop = new Date;
+                thisLoop = 0;
+
+
+                setInterval(game.update, 16);
+                var fpsOut = document.getElementById('fps');
+                setInterval(function() {
+                    fpsOut.innerHTML = (1000 / frameTime).toFixed(1) + " fps";
+                }, 1000);
+
+
             };
         </script>
     </head>
     <body>
+        <span id="fps"></span>
+        <br>
         <canvas id="canvas" width="400" height="300"></canvas>
     </body>
 </html>

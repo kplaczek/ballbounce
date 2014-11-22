@@ -15,6 +15,9 @@ Game.prototype.add = function(ball) {
 
 Game.prototype.update = function() {
     totalEnergy = 0;
+    var thisFrameTime = (thisLoop = new Date) - lastLoop;
+    frameTime += (thisFrameTime - frameTime) / filterStrength;
+    lastLoop = thisLoop;
 
     for (var i = 0, e = game.balls.length; i < e; i++) {
         for (var j = i + 1, e = game.balls.length; j < e; j++) {
