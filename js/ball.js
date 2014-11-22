@@ -40,15 +40,13 @@ Ball.prototype.boardColliding = function() {
 };
 
 Ball.prototype.coliding = function(ball) {
-    var xd = this.getX() - ball.getX();
-    var yd = this.getY() - ball.getY();
+
+    var delta = this.position.subtract(ball.position);
+    var distSqr = delta.length();
 
     var sumRadius = this.getRadius() + ball.getRadius();
-    var sqrRadius = sumRadius * sumRadius;
 
-    var distSqr = (xd * xd) + (yd * yd);
-
-    if (distSqr <= sqrRadius)
+    if (Math.round(distSqr) <=  Math.round(sumRadius))
     {
         return true;
     }

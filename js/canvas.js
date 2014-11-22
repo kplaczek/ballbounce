@@ -43,7 +43,7 @@ Canvas.prototype.click = function(event) {
     //ball has been clicked so dont add new ball to the set 
     if (!onBallClick) {
         var newMass = Math.round(Math.random() * 30) + 1;
-        game.add(new Ball(x, y, newMass, newMass));
+        game.add(new Ball(x, y, Math.round(newMass)), Math.round(newMass));
     }
 };
 

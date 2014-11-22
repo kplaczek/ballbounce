@@ -69,6 +69,4 @@ Game.prototype.calculate = function() {
         game.balls[i].move();
 
     }
-    console.info(game.maxEnergy);
-    
 };
