@@ -3,7 +3,7 @@
     <head>
         <title>Ball bounce index page</title>
         <meta charset="UTF-8">
-        <script type="text/javascript">
+        <script type="text/javascript" type="text/javascript">
             var BallBounce = {};
         </script>
         <style>
@@ -11,11 +11,11 @@
         </style>
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="js/canvas.js"></script>
-        <script src="js/game.js"></script>
-        <script src="js/vector.js"></script>
-        <script src="js/ball.js"></script>
-        <script src="js/turret.js"></script>
+        <script type="text/javascript" src="js/canvas.js"></script>
+        <script type="text/javascript" src="js/game.js"></script>
+        <script type="text/javascript" src="js/vector.js"></script>
+        <script type="text/javascript" src="js/ball.js"></script>
+        <script type="text/javascript" src="js/turret.js"></script>
         <script type="text/javascript">
             window.onload = function() {
 
@@ -32,13 +32,13 @@
 
 
                 //manual "oponents"
-                oponent = new Ball(0, -250, 100, 200);
+                oponent = new Ball(0, -200, 100, 200);
                 oponent.velocity = new Vector(0, 0.05);
 
-                oponent2 = new Ball(-400, -250, 100, 200);
+                oponent2 = new Ball(-400, -200, 100, 200);
                 oponent2.velocity = new Vector(0.05, 0.05);
 
-                oponent3 = new Ball(400, -250, 100, 200);
+                oponent3 = new Ball(400, -200, 100, 200);
                 oponent3.velocity = new Vector(-0.05, 0.05);
 
                 game.add(oponent);

@@ -6,28 +6,29 @@ function Game() {
     this.turret = null;
     this.bulletSize = 4;
     this.bulletMass = 30;
+    this.wallBounce = false;
 }
 
-Game.prototype.setCanvas = function(canvas) {
+Game.prototype.setCanvas = function (canvas) {
     this.canvas = canvas;
 };
 
-Game.prototype.add = function(ball) {
+Game.prototype.add = function (ball) {
     this.balls.push(ball);
 };
 
-Game.prototype.setTurret = function(turret) {
+Game.prototype.setTurret = function (turret) {
     this.turret = turret;
 };
 
-Game.prototype.update = function() {
+Game.prototype.update = function () {
     var thisFrameTime = (thisLoop = new Date) - lastLoop;
     frameTime += (thisFrameTime - frameTime) / filterStrength;
     lastLoop = thisLoop;
     game.canvas.draw();
 };
 
-Game.prototype.calculate = function() {
+Game.prototype.calculate = function () {
     game.maxEnergy = game.totalEnergy = 0;
     for (var i = 0, e = game.balls.length; i < e; i++) {
         for (var j = i + 1, e = game.balls.length; j < e; j++) {
@@ -70,7 +71,12 @@ Game.prototype.calculate = function() {
 
         game.maxEnergy = Math.max(game.balls[i].getEnergy(), game.maxEnergy);
         game.totalEnergy += game.balls[i].getEnergy();
-        game.balls[i].boardColliding();
+        if (game.wallBounce) {
+            game.balls[i].boardColliding();
+        }
+        if (game.balls[i].outsideBoard()) {
+            game.balls.splice(i, 1);
+        }
         game.balls[i].move();
 
     }

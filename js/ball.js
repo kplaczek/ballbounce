@@ -9,45 +9,56 @@ function Ball(x, y, radius, mass) {
 
 }
 
-Ball.prototype.getEnergy = function() {
+Ball.prototype.getEnergy = function () {
     this.energy = (this.getMass() * this.velocity.length() * this.velocity.length()) / 2;
     return this.energy;
 }
 
-Ball.prototype.getX = function() {
+Ball.prototype.getX = function () {
     return this.position.x;
 };
-Ball.prototype.getY = function() {
+Ball.prototype.getY = function () {
     return this.position.y;
 };
-Ball.prototype.getRadius = function() {
+Ball.prototype.getRadius = function () {
     return this.radius;
 };
-Ball.prototype.getMass = function() {
+Ball.prototype.getMass = function () {
     return this.mass;
 };
 
-Ball.prototype.move = function() {
+Ball.prototype.move = function () {
     this.position = this.position.add(this.velocity);
 };
 
-Ball.prototype.boardColliding = function() {
-//    if (this.getX() - this.radius < canvas.boundaries.left || this.getX() + this.radius > canvas.boundaries.right)
-//        this.velocity = this.velocity.multiply(new Vector(-1, 1, 1));
-//
-////    if (this.getY() - this.radius < canvas.boundaries.top || this.getY() + this.radius > canvas.boundaries.bottom)
-//    if (this.getY() + this.radius > canvas.boundaries.bottom)
-//        this.velocity = this.velocity.multiply(new Vector(1, -1, 1));
+Ball.prototype.outsideBoard = function () {
+    if (this.getY() + this.getRadius() < canvas.boundaries.top ||
+            this.getY() - this.getRadius() > canvas.boundaries.bottom ||
+            this.getX() + this.getRadius() < canvas.boundaries.left ||
+            this.getX() - this.getRadius() > canvas.boundaries.right
+            ) {
+        return true;
+    } else {
+        return false;
+    }
 };
 
-Ball.prototype.coliding = function(ball) {
+Ball.prototype.boardColliding = function () {
+    if (this.getX() - this.radius < canvas.boundaries.left || this.getX() + this.radius > canvas.boundaries.right)
+        this.velocity = this.velocity.multiply(new Vector(-1, 1, 1));
+
+    if (this.getY() - this.radius < canvas.boundaries.top || this.getY() + this.radius > canvas.boundaries.bottom)
+        this.velocity = this.velocity.multiply(new Vector(1, -1, 1));
+};
+
+Ball.prototype.coliding = function (ball) {
 
     var delta = this.position.subtract(ball.position);
     var distSqr = delta.length();
 
     var sumRadius = this.getRadius() + ball.getRadius();
 
-    if (Math.round(distSqr) <=  Math.round(sumRadius))
+    if (Math.round(distSqr) <= Math.round(sumRadius))
     {
         return true;
     }
