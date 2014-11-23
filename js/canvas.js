@@ -51,8 +51,9 @@ Canvas.prototype.click = function(event) {
         var newMass = Math.round(Math.random() * 30) + 1;
 //        var ball = new Ball(game.turret.turretEndCoordinates.x, game.turret.turretEndCoordinates.y, Math.round(newMass), Math.round(newMass));
         var ball = new Ball(game.turret.turretEndCoordinates.x, game.turret.turretEndCoordinates.y,game.bulletSize, game.bulleMass);
-        ball.velocity = game.turret.direction.negative().multiply(4);
+        ball.velocity = game.turret.direction.negative().multiply(6);
         game.add(ball);
+        game.sound.shootPlay();
     }
 };
 

@@ -7,10 +7,15 @@ function Game() {
     this.bulletSize = 4;
     this.bulletMass = 30;
     this.wallBounce = false;
+    this.sound = null;
 }
 
 Game.prototype.setCanvas = function (canvas) {
     this.canvas = canvas;
+};
+
+Game.prototype.setSound = function (sound) {
+    this.sound = sound;
 };
 
 Game.prototype.add = function (ball) {
@@ -36,10 +41,8 @@ Game.prototype.calculate = function () {
             first = game.balls[i];
             second = game.balls[j];
             if (first.coliding(second)) {
-                var audio = document.getElementById('audio').cloneNode(true);
 
-                var snd = new Audio("http://www.freesound.org/data/previews/22/22768_132693-lq.mp3"); // buffers automatically when created
-                snd.play();
+                game.sound.colissionPlay();
 
                 v_n = second.position.subtract(first.position); // v_n = normal vec. - a vector normal to the collision surface
                 v_un = v_n.unit(); // unit normal vector
@@ -78,10 +81,11 @@ Game.prototype.calculate = function () {
         if (game.wallBounce) {
             game.balls[i].boardColliding();
         }
+        game.balls[i].move();
+        
         if (game.balls[i].outsideBoard()) {
             game.balls.splice(i, 1);
         }
-        game.balls[i].move();
 
     }
 };

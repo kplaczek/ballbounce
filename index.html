@@ -16,6 +16,7 @@
         <script type="text/javascript" src="js/vector.js"></script>
         <script type="text/javascript" src="js/ball.js"></script>
         <script type="text/javascript" src="js/turret.js"></script>
+        <script type="text/javascript" src="js/sound.js"></script>
         <script type="text/javascript">
             window.onload = function() {
 
@@ -24,6 +25,8 @@
                 game.setCanvas(canvas);
                 turret = new Turret();
                 game.setTurret(turret);
+                sound = new Sound();
+                game.setSound(sound);
 
                 filterStrength = 20;
                 frameTime = 0;
@@ -58,10 +61,6 @@
         </script>
     </head>
     <body>
-
-        <audio id="audio">
-            <source src="http://www.freesound.org/data/previews/22/22768_132693-lq.mp3#t=0,0.05"></source>
-        </audio>
         <span id="fps"></span>
         <br>
         <canvas id="canvas" width="1200" height="600"></canvas>
