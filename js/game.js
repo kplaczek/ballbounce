@@ -36,6 +36,11 @@ Game.prototype.calculate = function () {
             first = game.balls[i];
             second = game.balls[j];
             if (first.coliding(second)) {
+                var audio = document.getElementById('audio').cloneNode(true);
+
+                var snd = new Audio("http://www.freesound.org/data/previews/22/22768_132693-lq.mp3"); // buffers automatically when created
+                snd.play();
+
                 v_n = second.position.subtract(first.position); // v_n = normal vec. - a vector normal to the collision surface
                 v_un = v_n.unit(); // unit normal vector
                 v_ut = new Vector(-v_un.y, v_un.x); // unit tangent vector
@@ -68,7 +73,6 @@ Game.prototype.calculate = function () {
 
             }
         }
-
         game.maxEnergy = Math.max(game.balls[i].getEnergy(), game.maxEnergy);
         game.totalEnergy += game.balls[i].getEnergy();
         if (game.wallBounce) {

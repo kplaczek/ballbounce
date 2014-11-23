@@ -49,7 +49,7 @@
                 setInterval(game.update, 16);
                 setInterval(game.calculate, 8);
                 var fpsOut = document.getElementById('fps');
-                setInterval(function() {
+                setInterval(function () {
                     fpsOut.innerHTML = (1000 / frameTime).toFixed(1) + " fps";
                 }, 1000);
 
@@ -58,6 +58,10 @@
         </script>
     </head>
     <body>
+
+        <audio id="audio">
+            <source src="http://www.freesound.org/data/previews/22/22768_132693-lq.mp3#t=0,0.05"></source>
+        </audio>
         <span id="fps"></span>
         <br>
         <canvas id="canvas" width="1200" height="600"></canvas>
