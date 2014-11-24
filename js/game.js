@@ -1,5 +1,6 @@
 function Game() {
     this.balls = [];
+    this.opponents = [];
     this.canvas = null;
     this.maxEnergy = 0;
     this.totalEnergy = 0;
