@@ -7,8 +7,9 @@ function Game() {
     this.turret = null;
     this.bulletSize = 4;
     this.bulletMass = 30;
+    this.bulletSpeed = 10;
     this.wallBounce = false;
-    this.sound = null;
+    this.sound = null;   
 }
 
 Game.prototype.setCanvas = function (canvas) {
@@ -19,8 +20,11 @@ Game.prototype.setSound = function (sound) {
     this.sound = sound;
 };
 
-Game.prototype.add = function (ball) {
+Game.prototype.addBullet = function (ball) {
     this.balls.push(ball);
+};
+Game.prototype.addOpponents = function (opponent) {
+    this.opponents.push(opponent);
 };
 
 Game.prototype.setTurret = function (turret) {
@@ -34,59 +38,47 @@ Game.prototype.update = function () {
     game.canvas.draw();
 };
 
+Game.prototype.newOpponent = function () {
+
+    var x = game.random(canvas.boundaries.left, canvas.boundaries.right);
+    var radius = game.random(20, 100);
+    var y = canvas.boundaries.top - radius;
+    var mass = radius;
+    var opponent = new Ball(x, y, radius, mass);
+
+    var positionOfBottom = new Vector(game.random(canvas.boundaries.left, canvas.boundaries.right), canvas.boundaries.bottom);
+    var velocity = positionOfBottom.subtract(opponent.position).unit().multiply(game.random(1, 4));
+    opponent.velocity = velocity;
+    game.addOpponents(opponent);
+};
+Game.prototype.random = function (min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+
+};
 Game.prototype.calculate = function () {
     game.maxEnergy = game.totalEnergy = 0;
     for (var i = 0, e = game.balls.length; i < e; i++) {
-        for (var j = i + 1, e = game.balls.length; j < e; j++) {
-
-            first = game.balls[i];
-            second = game.balls[j];
-            if (first.coliding(second)) {
-
-                game.sound.colissionPlay();
-
-                v_n = second.position.subtract(first.position); // v_n = normal vec. - a vector normal to the collision surface
-                v_un = v_n.unit(); // unit normal vector
-                v_ut = new Vector(-v_un.y, v_un.x); // unit tangent vector
-
-                // Compute scalar projections of velocities onto v_un and v_ut
-                v1n = v_un.dot(first.velocity); // Dot product
-                v1t = v_ut.dot(first.velocity);
-                v2n = v_un.dot(second.velocity);
-                v2t = v_ut.dot(second.velocity);
-
-                // Compute new tangential velocities
-                v1tPrime = v1t; // Note: in reality, the tangential velocities do not change after the collision
-                v2tPrime = v2t;
-
-                // Compute new normal velocities using one-dimensional elastic collision equations in the normal direction
-                v1nPrime = (v1n * (first.getMass() - second.getMass()) + 2 * second.getMass() * v2n) / (first.getMass() + second.getMass());
-                v2nPrime = (v2n * (second.getMass() - first.getMass()) + 2 * first.getMass() * v1n) / (first.getMass() + second.getMass());
-
-                // Compute new normal and tangential velocity vectors
-                v_v1nPrime = v_un.multiply(v1nPrime); // Multiplication by a scalar
-                v_v1tPrime = v_ut.multiply(v1tPrime);
-                v_v2nPrime = v_un.multiply(v2nPrime);
-                v_v2tPrime = v_ut.multiply(v2tPrime);
-
-                // Set new velocities in x and y coordinates
-                first.velocity.x = v_v1nPrime.x + v_v1tPrime.x;
-                first.velocity.y = v_v1nPrime.y + v_v1tPrime.y;
-                second.velocity.x = v_v2nPrime.x + v_v2tPrime.x;
-                second.velocity.y = v_v2nPrime.y + v_v2tPrime.y;
-
-            }
-        }
         game.maxEnergy = Math.max(game.balls[i].getEnergy(), game.maxEnergy);
         game.totalEnergy += game.balls[i].getEnergy();
-        if (game.wallBounce) {
-            game.balls[i].boardColliding();
+    }
+    for (var i = 0, e = game.balls.length; i < game.balls.length; i++) {
+        for (var j = 0, e2 = game.opponents.length; j < game.opponents.length; j++) {
+            if (game.balls[i].coliding(game.opponents[j])) {
+//                game.sound.colissionPlay();
+                game.balls[i].resolveCollision(game.opponents[j]);
+            }
         }
+    }
+    for (var i = 0, e = game.balls.length; i < game.balls.length; i++) {
         game.balls[i].move();
-        
         if (game.balls[i].outsideBoard()) {
             game.balls.splice(i, 1);
         }
-
+    }
+    for (var j = 0, e2 = game.opponents.length; j < game.opponents.length; j++) {
+        game.opponents[j].move();
+        if (game.opponents[j].outsideBoard()) {
+            game.opponents.splice(j, 1);
+        }
     }
 };

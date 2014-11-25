@@ -18,7 +18,7 @@
         <script type="text/javascript" src="js/turret.js"></script>
         <script type="text/javascript" src="js/sound.js"></script>
         <script type="text/javascript">
-            window.onload = function() {
+            window.onload = function () {
 
                 game = new Game();
                 canvas = new Canvas();
@@ -34,34 +34,24 @@
                 thisLoop = 0;
 
 
-                //manual "oponents"
-                oponent = new Ball(0, -200, 100, 200);
-                oponent.velocity = new Vector(0, 0.05);
 
-                oponent2 = new Ball(-400, -200, 100, 200);
-                oponent2.velocity = new Vector(0.05, 0.05);
+                var fpsDraw = 40;
+                var fpsCalculate = 40;
 
-                oponent3 = new Ball(400, -200, 100, 200);
-                oponent3.velocity = new Vector(-0.05, 0.05);
-
-                game.add(oponent);
-                game.add(oponent2);
-                game.add(oponent3);
-
-
-                setInterval(game.update, 16);
-                setInterval(game.calculate, 8);
+                setInterval(game.newOpponent, 4000);
+                setInterval(game.update, 1000 / fpsDraw);
+                setInterval(game.calculate, 1000 / fpsCalculate);
                 var fpsOut = document.getElementById('fps');
                 setInterval(function () {
                     fpsOut.innerHTML = (1000 / frameTime).toFixed(1) + " fps";
                 }, 1000);
-
-
             };
         </script>
     </head>
     <body>
         <span id="fps"></span>
+        <br>
+        <input id="volume" type="range" min ="0" max="100" step="1" value ="100"/> 
         <br>
         <canvas id="canvas" width="1200" height="600"></canvas>
     </body>

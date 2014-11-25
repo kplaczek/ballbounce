@@ -48,23 +48,28 @@ Canvas.prototype.click = function(event) {
 
     //ball has been clicked so dont add new ball to the set 
     if (!onBallClick) {
-        var newMass = Math.round(Math.random() * 30) + 1;
-//        var ball = new Ball(game.turret.turretEndCoordinates.x, game.turret.turretEndCoordinates.y, Math.round(newMass), Math.round(newMass));
         var ball = new Ball(game.turret.turretEndCoordinates.x, game.turret.turretEndCoordinates.y,game.bulletSize, game.bulleMass);
-        ball.velocity = game.turret.direction.negative().multiply(6);
-        game.add(ball);
+        ball.velocity = game.turret.direction.negative().multiply(game.bulletSpeed);
+        game.addBullet(ball);
         game.sound.shootPlay();
     }
 };
 
 Canvas.prototype.clear = function() {
     this.ctx.clearRect(this.boundaries.left, this.boundaries.top, this.width, this.height);
-}
+};
 
 Canvas.prototype.draw = function(object) {
     this.clear();
     for (ball in game.balls) {
         var object = game.balls[ball];
+        this.ctx.beginPath();
+        this.ctx.fillStyle = "rgba(255, 0, 0, " + ((0.9 * object.getEnergy() / game.maxEnergy) + 0.1) + ")";
+        this.ctx.arc(object.getX(), object.getY(), object.getRadius(), 0, Math.PI * 2);
+        this.ctx.fill();
+    }
+    for (opponent in game.opponents) {
+        var object = game.opponents[opponent];
         this.ctx.beginPath();
         this.ctx.fillStyle = "rgba(255, 0, 0, " + ((0.9 * object.getEnergy() / game.maxEnergy) + 0.1) + ")";
         this.ctx.arc(object.getX(), object.getY(), object.getRadius(), 0, Math.PI * 2);

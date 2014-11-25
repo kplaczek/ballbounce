@@ -32,7 +32,8 @@ Ball.prototype.move = function () {
 };
 
 Ball.prototype.outsideBoard = function () {
-    if (this.getY() + this.getRadius() < canvas.boundaries.top ||
+    var offset = 300;
+    if (this.getY() + this.getRadius()+offset < canvas.boundaries.top ||
             this.getY() - this.getRadius() > canvas.boundaries.bottom ||
             this.getX() + this.getRadius() < canvas.boundaries.left ||
             this.getX() - this.getRadius() > canvas.boundaries.right
@@ -64,4 +65,37 @@ Ball.prototype.coliding = function (ball) {
     }
 
     return false;
+};
+
+Ball.prototype.resolveCollision = function (ball) {
+
+    v_n = ball.position.subtract(this.position); // v_n = normal vec. - a vector normal to the collision surface
+    v_un = v_n.unit(); // unit normal vector
+    v_ut = new Vector(-v_un.y, v_un.x); // unit tangent vector
+
+    // Compute scalar projections of velocities onto v_un and v_ut
+    v1n = v_un.dot(this.velocity); // Dot product
+    v1t = v_ut.dot(this.velocity);
+    v2n = v_un.dot(ball.velocity);
+    v2t = v_ut.dot(ball.velocity);
+
+    // Compute new tangential velocities
+    v1tPrime = v1t; // Note: in reality, the tangential velocities do not change after the collision
+    v2tPrime = v2t;
+
+    // Compute new normal velocities using one-dimensional elastic collision equations in the normal direction
+    v1nPrime = (v1n * (this.getMass() - ball.getMass()) + 2 * ball.getMass() * v2n) / (this.getMass() + ball.getMass());
+    v2nPrime = (v2n * (ball.getMass() - this.getMass()) + 2 * this.getMass() * v1n) / (this.getMass() + ball.getMass());
+
+    // Compute new normal and tangential velocity vectors
+    v_v1nPrime = v_un.multiply(v1nPrime); // Multiplication by a scalar
+    v_v1tPrime = v_ut.multiply(v1tPrime);
+    v_v2nPrime = v_un.multiply(v2nPrime);
+    v_v2tPrime = v_ut.multiply(v2tPrime);
+
+    // Set new velocities in x and y coordinates
+    this.velocity.x = v_v1nPrime.x + v_v1tPrime.x;
+    this.velocity.y = v_v1nPrime.y + v_v1tPrime.y;
+    ball.velocity.x = v_v2nPrime.x + v_v2tPrime.x;
+    ball.velocity.y = v_v2nPrime.y + v_v2tPrime.y;
 };
