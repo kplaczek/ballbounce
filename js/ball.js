@@ -33,7 +33,7 @@ Ball.prototype.move = function () {
 
 Ball.prototype.outsideBoard = function () {
     var offset = 300;
-    if (this.getY() + this.getRadius()+offset < canvas.boundaries.top ||
+    if (this.getY() + this.getRadius() + offset < canvas.boundaries.top ||
             this.getY() - this.getRadius() > canvas.boundaries.bottom ||
             this.getX() + this.getRadius() < canvas.boundaries.left ||
             this.getX() - this.getRadius() > canvas.boundaries.right
@@ -94,8 +94,6 @@ Ball.prototype.resolveCollision = function (ball) {
     v_v2tPrime = v_ut.multiply(v2tPrime);
 
     // Set new velocities in x and y coordinates
-    this.velocity.x = v_v1nPrime.x + v_v1tPrime.x;
-    this.velocity.y = v_v1nPrime.y + v_v1tPrime.y;
-    ball.velocity.x = v_v2nPrime.x + v_v2tPrime.x;
-    ball.velocity.y = v_v2nPrime.y + v_v2tPrime.y;
+    this.velocity = new Vector(v_v1nPrime.x + v_v1tPrime.x, v_v1nPrime.y + v_v1tPrime.y);
+    ball.velocity = new Vector(v_v2nPrime.x + v_v2tPrime.x, ball.velocity.y = v_v2nPrime.y + v_v2tPrime.y);
 };
