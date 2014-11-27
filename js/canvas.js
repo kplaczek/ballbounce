@@ -1,5 +1,6 @@
 function Canvas() {
     var canvas = document.getElementById('canvas');
+    this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.height = canvas.height;
     this.width = canvas.width;
@@ -29,7 +30,7 @@ Canvas.prototype.mousemove = function (event) {
 
 Canvas.prototype.drawScoreboard = function (scoreboard) {
     this.ctx.fillStyle = "black";
-    this.ctx.font = "bold 14px Arial";
+    this.ctx.font = "14px Arial";
     this.ctx.fillText("Ground hits: "+scoreboard.crushedOpponents, this.boundaries.left+20 , this.boundaries.bottom - 60);
     this.ctx.fillText("Repulsed opponents: "+scoreboard.repulsedOpponents, this.boundaries.left+20 , this.boundaries.bottom - 40);
     this.ctx.fillText("Shoots fired: "+scoreboard.shootsFired, this.boundaries.left+20 , this.boundaries.bottom - 20);

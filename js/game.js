@@ -18,6 +18,14 @@ function Game() {
             game.isPaused = (game.isPaused + 1) % 2;
             canvas.drawPause();
         }
+        if (e.keyCode === 70) {
+            e.preventDefault();
+            if (game.canvas.canvas.webkitRequestFullScreen) {
+                game.canvas.canvas.webkitRequestFullScreen();
+            } else {
+                game.canvas.canvas.mozRequestFullScreen();
+            }
+        }
     });
 }
 
