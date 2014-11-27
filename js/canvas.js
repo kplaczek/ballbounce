@@ -16,7 +16,6 @@ function Canvas() {
     this.left = canvas.offsetLeft;
     this.top = canvas.offsetTop;
 
-
     this.balls = [];
     canvas.addEventListener('click', this.click, true);
     canvas.addEventListener('mousemove', this.mousemove, true);
@@ -26,6 +25,15 @@ Canvas.prototype.mousemove = function (event) {
     var cursorX = event.pageX - canvas.left - canvas.offsetX;
     var cursorY = event.pageY - canvas.top - canvas.offsetY;
     game.turret.calculateTurret(cursorX, cursorY);
+};
+
+Canvas.prototype.drawScoreboard = function (scoreboard) {
+    this.ctx.fillStyle = "black";
+    this.ctx.font = "bold 14px Arial";
+    this.ctx.fillText("Ground hits: "+scoreboard.crushedOpponents, this.boundaries.left+20 , this.boundaries.bottom - 60);
+    this.ctx.fillText("Repulsed opponents: "+scoreboard.repulsedOpponents, this.boundaries.left+20 , this.boundaries.bottom - 40);
+    this.ctx.fillText("Shoots fired: "+scoreboard.shootsFired, this.boundaries.left+20 , this.boundaries.bottom - 20);
+
 };
 
 Canvas.prototype.click = function (event) {
@@ -64,7 +72,7 @@ Canvas.prototype.clear = function () {
 Canvas.prototype.drawPause = function () {
     this.ctx.fillStyle = "black";
     this.ctx.font = "bold 20px Arial";
-    this.ctx.fillText("PAUSED", (this.boundaries.right+this.boundaries.left)/2, this.boundaries.top+100, 300);
+    this.ctx.fillText("PAUSED", (this.boundaries.right + this.boundaries.left) / 2, this.boundaries.top + 100, 300);
 };
 
 Canvas.prototype.draw = function (object) {
@@ -84,6 +92,7 @@ Canvas.prototype.draw = function (object) {
         this.ctx.fill();
     }
     this.drawTurret();
+    this.drawScoreboard(game.scoreBoard);
 };
 
 Canvas.prototype.drawTurret = function () {

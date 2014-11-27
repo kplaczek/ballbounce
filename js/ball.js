@@ -33,14 +33,25 @@ Ball.prototype.move = function () {
 
 Ball.prototype.outsideBoard = function () {
     var offset = 300;
-    if (this.getY() + this.getRadius() + offset < canvas.boundaries.top ||
-            this.getY() - this.getRadius() > canvas.boundaries.bottom ||
-            this.getX() + this.getRadius() < canvas.boundaries.left ||
-            this.getX() - this.getRadius() > canvas.boundaries.right
-            ) {
+    //top border
+    if (this.getY() + this.getRadius() + offset < canvas.boundaries.top) {
+        game.scoreBoard.repulsedOpponent();
         return true;
-    } else {
-        return false;
+    }
+    //bottom border
+    if (this.getY() - this.getRadius() > canvas.boundaries.bottom) {
+        game.scoreBoard.crushedOpponent();
+        return true;
+    }
+    //left border
+    if (this.getX() + this.getRadius() < canvas.boundaries.left) {
+        game.scoreBoard.repulsedOpponent();
+        return true;
+    }
+    //right border
+    if (this.getX() - this.getRadius() > canvas.boundaries.right) {
+        game.scoreBoard.repulsedOpponent();
+        return true;
     }
 };
 

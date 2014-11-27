@@ -11,6 +11,7 @@ function Game() {
     this.wallBounce = false;
     this.sound = null;
     this.isPaused = 0;
+    this.scoreBoard = new Scoreboard();
     window.addEventListener("keydown", function (e) {
         if (e.keyCode === 80) {
             e.preventDefault();
@@ -30,9 +31,12 @@ Game.prototype.setSound = function (sound) {
 
 Game.prototype.addBullet = function (ball) {
     this.balls.push(ball);
+    this.scoreBoard.shootFired();
 };
 Game.prototype.addOpponents = function (opponent) {
-    this.opponents.push(opponent);
+    if (!game.isPaused) {
+        this.opponents.push(opponent);
+    }
 };
 
 Game.prototype.setTurret = function (turret) {
