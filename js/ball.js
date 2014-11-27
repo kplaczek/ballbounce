@@ -35,17 +35,20 @@ Ball.prototype.outsideBoard = function () {
     var offset = 300;
     //top border
     if (this.getY() + this.getRadius() + offset < canvas.boundaries.top) {
-        game.scoreBoard.repulsedOpponent();
+        if (this.objectName === "Opponent")
+            game.scoreBoard.repulsedOpponent();
         return true;
     }
     //bottom border
     if (this.getY() - this.getRadius() > canvas.boundaries.bottom) {
-        game.scoreBoard.crushedOpponent();
+        if (this.objectName === "Opponent")
+            game.scoreBoard.crushedOpponent();
         return true;
     }
     //left border
     if (this.getX() + this.getRadius() < canvas.boundaries.left) {
-        game.scoreBoard.repulsedOpponent();
+        if (this.objectName === "Opponent")
+            game.scoreBoard.repulsedOpponent();
         return true;
     }
     //right border

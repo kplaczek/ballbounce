@@ -67,6 +67,7 @@ Game.prototype.newOpponent = function () {
         var y = canvas.boundaries.top - radius;
         var mass = radius;
         var opponent = new Ball(x, y, radius, mass);
+        opponent.objectName = 'Opponent';
 
         var positionOfBottom = new Vector(game.random(canvas.boundaries.left, canvas.boundaries.right), canvas.boundaries.bottom);
         var velocity = positionOfBottom.subtract(opponent.position).unit().multiply(game.random(1, 4));
