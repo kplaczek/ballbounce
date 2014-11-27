@@ -57,7 +57,7 @@ Canvas.prototype.click = function (event) {
 
         //ball has been clicked so dont add new ball to the set 
         if (!onBallClick) {
-            var ball = new Ball(game.turret.turretEndCoordinates.x, game.turret.turretEndCoordinates.y, game.bulletSize, game.bulleMass);
+            var ball = new Ball(game.turret.turretEndCoordinates.x, game.turret.turretEndCoordinates.y, game.bulletSize, game.bulletMass);
             ball.velocity = game.turret.direction.negative().multiply(game.bulletSpeed);
             game.addBullet(ball);
             game.sound.shootPlay();

@@ -6,7 +6,7 @@ function Game() {
     this.totalEnergy = 0;
     this.turret = null;
     this.bulletSize = 4;
-    this.bulletMass = 30;
+    this.bulletMass = 5;
     this.bulletSpeed = 10;
     this.wallBounce = false;
     this.sound = null;
