@@ -22,44 +22,52 @@ function Canvas() {
     canvas.addEventListener('mousemove', this.mousemove, true);
 
 }
-Canvas.prototype.mousemove = function(event) {
+Canvas.prototype.mousemove = function (event) {
     var cursorX = event.pageX - canvas.left - canvas.offsetX;
     var cursorY = event.pageY - canvas.top - canvas.offsetY;
     game.turret.calculateTurret(cursorX, cursorY);
 };
 
-Canvas.prototype.click = function(event) {
-    var x = event.pageX - canvas.left - canvas.offsetX;
-    var y = event.pageY - canvas.top - canvas.offsetY;
+Canvas.prototype.click = function (event) {
+    if (!game.isPaused) {
+        var x = event.pageX - canvas.left - canvas.offsetX;
+        var y = event.pageY - canvas.top - canvas.offsetY;
 
-    var point = new Vector(x, y);
-    //ball clicked flag set to false
-    onBallClick = false;
-    //check if any ball has been clickd 
-    for (i in game.balls) {
-        delta = game.balls[i].position.subtract(point);
-        length = delta.length();
-        if (length < game.balls[i].getRadius()) {
-            game.balls.splice(i, 1);
-            //it is set flag to true 
-            onBallClick = true;
+        var point = new Vector(x, y);
+        //ball clicked flag set to false
+        onBallClick = false;
+        //check if any ball has been clickd 
+        for (i in game.balls) {
+            delta = game.balls[i].position.subtract(point);
+            length = delta.length();
+            if (length < game.balls[i].getRadius()) {
+                game.balls.splice(i, 1);
+                //it is set flag to true 
+                onBallClick = true;
+            }
         }
-    }
 
-    //ball has been clicked so dont add new ball to the set 
-    if (!onBallClick) {
-        var ball = new Ball(game.turret.turretEndCoordinates.x, game.turret.turretEndCoordinates.y,game.bulletSize, game.bulleMass);
-        ball.velocity = game.turret.direction.negative().multiply(game.bulletSpeed);
-        game.addBullet(ball);
-        game.sound.shootPlay();
+        //ball has been clicked so dont add new ball to the set 
+        if (!onBallClick) {
+            var ball = new Ball(game.turret.turretEndCoordinates.x, game.turret.turretEndCoordinates.y, game.bulletSize, game.bulleMass);
+            ball.velocity = game.turret.direction.negative().multiply(game.bulletSpeed);
+            game.addBullet(ball);
+            game.sound.shootPlay();
+        }
     }
 };
 
-Canvas.prototype.clear = function() {
+Canvas.prototype.clear = function () {
     this.ctx.clearRect(this.boundaries.left, this.boundaries.top, this.width, this.height);
 };
 
-Canvas.prototype.draw = function(object) {
+Canvas.prototype.drawPause = function () {
+    this.ctx.fillStyle = "black";
+    this.ctx.font = "bold 20px Arial";
+    this.ctx.fillText("PAUSED", (this.boundaries.right+this.boundaries.left)/2, this.boundaries.top+100, 300);
+};
+
+Canvas.prototype.draw = function (object) {
     this.clear();
     for (ball in game.balls) {
         var object = game.balls[ball];
@@ -78,7 +86,7 @@ Canvas.prototype.draw = function(object) {
     this.drawTurret();
 };
 
-Canvas.prototype.drawTurret = function() {
+Canvas.prototype.drawTurret = function () {
     this.ctx.beginPath();
 
     //draw a line
