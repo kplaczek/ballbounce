@@ -25,15 +25,19 @@ function Canvas() {
 Canvas.prototype.mousemove = function (event) {
     var cursorX = event.pageX - canvas.left - canvas.offsetX;
     var cursorY = event.pageY - canvas.top - canvas.offsetY;
+    canvas.ctx.beginPath();
+    canvas.ctx.fillStyle = "rgba(0, 0, 0, 1)";
+    canvas.ctx.arc(cursorX, cursorY, 3, 0, Math.PI * 2);
+    canvas.ctx.fill();
     game.turret.calculateTurret(cursorX, cursorY);
 };
 
 Canvas.prototype.drawScoreboard = function (scoreboard) {
     this.ctx.fillStyle = "black";
     this.ctx.font = "14px Arial";
-    this.ctx.fillText("Ground hits: "+scoreboard.crushedOpponents, this.boundaries.left+20 , this.boundaries.bottom - 60);
-    this.ctx.fillText("Repulsed opponents: "+scoreboard.repulsedOpponents, this.boundaries.left+20 , this.boundaries.bottom - 40);
-    this.ctx.fillText("Shoots fired: "+scoreboard.shootsFired, this.boundaries.left+20 , this.boundaries.bottom - 20);
+    this.ctx.fillText("Ground hits: " + scoreboard.crushedOpponents, this.boundaries.left + 20, this.boundaries.bottom - 60);
+    this.ctx.fillText("Repulsed opponents: " + scoreboard.repulsedOpponents, this.boundaries.left + 20, this.boundaries.bottom - 40);
+    this.ctx.fillText("Shoots fired: " + scoreboard.shootsFired, this.boundaries.left + 20, this.boundaries.bottom - 20);
 
 };
 
