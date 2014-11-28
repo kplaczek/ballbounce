@@ -6,6 +6,8 @@ function Canvas() {
     this.width = canvas.width;
     this.offsetX = this.width / 2;
     this.offsetY = this.height / 2;
+    this.cursorX;
+    this.cursorY;
     this.boundaries = {top: -this.offsetY,
         bottom: this.height - this.offsetY,
         left: -this.offsetX,
@@ -25,11 +27,27 @@ function Canvas() {
 Canvas.prototype.mousemove = function (event) {
     var cursorX = event.pageX - canvas.left - canvas.offsetX;
     var cursorY = event.pageY - canvas.top - canvas.offsetY;
+    canvas.cursorX = cursorX;
+    canvas.cursorY = cursorY;
+    game.turret.calculateTurret(cursorX, cursorY);
+};
+
+Canvas.prototype.drawCursor = function () {
+
+    this.ctx.beginPath();
+    this.ctx.moveTo(canvas.cursorX-5, canvas.cursorY);
+    this.ctx.lineTo(canvas.cursorX+5, canvas.cursorY);
+    this.ctx.stroke();
+    
+    this.ctx.beginPath();
+    this.ctx.moveTo(canvas.cursorX, canvas.cursorY-5);
+    this.ctx.lineTo(canvas.cursorX, canvas.cursorY+5);
+    this.ctx.stroke();
+
     canvas.ctx.beginPath();
     canvas.ctx.fillStyle = "rgba(0, 0, 0, 1)";
-    canvas.ctx.arc(cursorX, cursorY, 3, 0, Math.PI * 2);
+    canvas.ctx.arc(canvas.cursorX, canvas.cursorY, 2, 0, Math.PI * 2);
     canvas.ctx.fill();
-    game.turret.calculateTurret(cursorX, cursorY);
 };
 
 Canvas.prototype.drawScoreboard = function (scoreboard) {
@@ -72,7 +90,11 @@ Canvas.prototype.click = function (event) {
 };
 
 Canvas.prototype.clear = function () {
-    this.ctx.clearRect(this.boundaries.left, this.boundaries.top, this.width, this.height);
+//    this.ctx.clearRect(this.boundaries.left, this.boundaries.top, this.width, this.height);
+
+    //uncomment two lines below and fiddle arround with alpha value for trippy effect :P
+    this.ctx.fillStyle = "rgba(255,255,255, 1)";
+    this.ctx.fillRect(this.boundaries.left, this.boundaries.top, this.width, this.height);
 };
 
 Canvas.prototype.drawPause = function () {
@@ -83,22 +105,27 @@ Canvas.prototype.drawPause = function () {
 
 Canvas.prototype.draw = function (object) {
     this.clear();
-    for (ball in game.balls) {
-        var object = game.balls[ball];
-        this.ctx.beginPath();
-        this.ctx.fillStyle = "rgba(255, 0, 0, " + ((0.9 * object.getEnergy() / game.maxEnergy) + 0.1) + ")";
-        this.ctx.arc(object.getX(), object.getY(), object.getRadius(), 0, Math.PI * 2);
-        this.ctx.fill();
-    }
-    for (opponent in game.opponents) {
-        var object = game.opponents[opponent];
-        this.ctx.beginPath();
-        this.ctx.fillStyle = "rgba(255, 0, 0, " + ((0.9 * object.getEnergy() / game.maxEnergy) + 0.1) + ")";
-        this.ctx.arc(object.getX(), object.getY(), object.getRadius(), 0, Math.PI * 2);
-        this.ctx.fill();
-    }
+    this.ctx.fillStyle = "red";
+    if (game.balls.length > 0)
+        for (ball in game.balls) {
+            var object = game.balls[ball];
+            this.ctx.beginPath();
+            this.ctx.fillStyle = "rgba(255, 0, 0, " + ((0.9 * object.getEnergy() / game.maxEnergy) + 0.1) + ")";
+            this.ctx.arc(object.getX(), object.getY(), object.getRadius(), 0, Math.PI * 2);
+            this.ctx.fill();
+        }
+    if (game.opponents.length > 0)
+        for (opponent in game.opponents) {
+            var object = game.opponents[opponent];
+            this.ctx.beginPath();
+//            console.info((0.9 * object.getEnergy() / game.maxEnergy));
+            this.ctx.fillStyle = "rgba(255, 0, 0, " + ((0.9 * object.getEnergy() / game.maxEnergy) + 0.1) + ")";
+            this.ctx.arc(object.getX(), object.getY(), object.getRadius(), 0, Math.PI * 2);
+            this.ctx.fill();
+        }
     this.drawTurret();
     this.drawScoreboard(game.scoreBoard);
+    this.drawCursor();
 };
 
 Canvas.prototype.drawTurret = function () {

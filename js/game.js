@@ -86,6 +86,10 @@ Game.prototype.calculate = function () {
             game.maxEnergy = Math.max(game.balls[i].getEnergy(), game.maxEnergy);
             game.totalEnergy += game.balls[i].getEnergy();
         }
+        for (var i = 0, e = game.opponents.length; i < e; i++) {
+            game.maxEnergy = Math.max(game.opponents[i].getEnergy(), game.maxEnergy);
+            game.totalEnergy += game.opponents[i].getEnergy();
+        }
         for (var i = 0, e = game.balls.length; i < game.balls.length; i++) {
             for (var j = 0, e2 = game.opponents.length; j < game.opponents.length; j++) {
                 if (game.balls[i].coliding(game.opponents[j])) {
