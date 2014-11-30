@@ -35,13 +35,13 @@ Canvas.prototype.mousemove = function (event) {
 Canvas.prototype.drawCursor = function () {
 
     this.ctx.beginPath();
-    this.ctx.moveTo(canvas.cursorX-5, canvas.cursorY);
-    this.ctx.lineTo(canvas.cursorX+5, canvas.cursorY);
+    this.ctx.moveTo(canvas.cursorX - 5, canvas.cursorY);
+    this.ctx.lineTo(canvas.cursorX + 5, canvas.cursorY);
     this.ctx.stroke();
-    
+
     this.ctx.beginPath();
-    this.ctx.moveTo(canvas.cursorX, canvas.cursorY-5);
-    this.ctx.lineTo(canvas.cursorX, canvas.cursorY+5);
+    this.ctx.moveTo(canvas.cursorX, canvas.cursorY - 5);
+    this.ctx.lineTo(canvas.cursorX, canvas.cursorY + 5);
     this.ctx.stroke();
 
     canvas.ctx.beginPath();
@@ -110,17 +110,21 @@ Canvas.prototype.draw = function (object) {
         for (ball in game.balls) {
             var object = game.balls[ball];
             this.ctx.beginPath();
-            this.ctx.fillStyle = "rgba(255, 0, 0, " + ((0.9 * object.getEnergy() / game.maxEnergy) + 0.1) + ")";
+            this.ctx.strokeStyle = "rgb(0,0,0)";
+            this.ctx.fillStyle = "rgba(255,255,255,255)";
             this.ctx.arc(object.getX(), object.getY(), object.getRadius(), 0, Math.PI * 2);
+            this.ctx.stroke();
             this.ctx.fill();
         }
     if (game.opponents.length > 0)
         for (opponent in game.opponents) {
             var object = game.opponents[opponent];
             this.ctx.beginPath();
-//            console.info((0.9 * object.getEnergy() / game.maxEnergy));
-            this.ctx.fillStyle = "rgba(255, 0, 0, " + ((0.9 * object.getEnergy() / game.maxEnergy) + 0.1) + ")";
+            this.ctx.strokeStyle = "rgb(0,0,0)";
+//            this.ctx.fillStyle = "rgba(255, 0, 0, " + ((0.9 * object.getEnergy() / game.maxEnergy) + 0.1) + ")";
+            this.ctx.fillStyle = "rgba(255,255,255,255)";
             this.ctx.arc(object.getX(), object.getY(), object.getRadius(), 0, Math.PI * 2);
+            this.ctx.stroke();
             this.ctx.fill();
         }
     this.drawTurret();
