@@ -11,6 +11,7 @@
         </style>
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="js/setting.js"></script>
         <script type="text/javascript" src="js/canvas.js"></script>
         <script type="text/javascript" src="js/game.js"></script>
         <script type="text/javascript" src="js/vector.js"></script>
@@ -21,6 +22,7 @@
         <script type="text/javascript">
             window.onload = function () {
 
+                settings = new Setting();
                 game = new Game();
                 canvas = new Canvas();
                 game.setCanvas(canvas);
@@ -52,7 +54,7 @@
     <body>
         <span id="fps"></span>
         <br>
-        <input id="volume" type="range" min ="0" max="100" step="1" value ="100"/> 
+        <input id="volume" type="range" min ="0" max="100" step="1" value="100"/> 
         <br>
         <canvas id="canvas" width="1200" height="700"></canvas>
     </body>
