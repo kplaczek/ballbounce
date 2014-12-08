@@ -1,7 +1,7 @@
 function Setting() {
     this.settings = {};
-    this.load();
     this.defaultSettings = {volume: 1};
+	this.load();
 }
 
 
@@ -10,8 +10,10 @@ Setting.prototype.save = function () {
 };
 
 Setting.prototype.load = function () {
-    if (localStorage.getItem('ballbounce') === null || localStorage.getItem('ballbounce') === "undefined") {
+	console.info(this.defaultSettings);
+    if (localStorage.getItem('ballbounce') === null || localStorage.getItem('ballbounce') === "undefined" || localStorage.getItem('ballbounce') === "{}") {
         this.settings = this.defaultSettings;
+		console.info(this.defaultSettings);
         this.save();
     } else {
         var retrievedObject = localStorage.getItem('ballbounce');
@@ -20,7 +22,7 @@ Setting.prototype.load = function () {
 };
 
 Setting.prototype.get = function (element) {
-    return this.settings[element];
+	return this.settings[element];
 };
 
 Setting.prototype.set = function (element, value) {

@@ -103,6 +103,12 @@ Canvas.prototype.drawPause = function () {
     this.ctx.fillText("PAUSED", (this.boundaries.right + this.boundaries.left) / 2, this.boundaries.top + 100, 300);
 };
 
+Canvas.prototype.drawFps = function () {
+    this.ctx.fillStyle = "black";
+    this.ctx.font = "bold 15px Arial";
+    this.ctx.fillText((1000 / frameTime).toFixed(1) + " fps", this.boundaries.left+5, this.boundaries.top+15, 300);
+};
+
 Canvas.prototype.draw = function (object) {
     this.clear();
     this.ctx.fillStyle = "red";
@@ -130,6 +136,7 @@ Canvas.prototype.draw = function (object) {
     this.drawTurret();
     this.drawScoreboard(game.scoreBoard);
     this.drawCursor();
+	this.drawFps();
 };
 
 Canvas.prototype.drawTurret = function () {

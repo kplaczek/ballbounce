@@ -45,17 +45,12 @@
                 setInterval(game.update, 1000 / fpsDraw);
                 setInterval(game.calculate, 1000 / fpsCalculate);
                 var fpsOut = document.getElementById('fps');
-                setInterval(function () {
-                    fpsOut.innerHTML = (1000 / frameTime).toFixed(1) + " fps";
-                }, 1000);
             };
         </script>
     </head>
     <body>
-        <span id="fps"></span>
-        <br>
         <input id="volume" type="range" min ="0" max="100" step="1" value="100"/> 
         <br>
-        <canvas id="canvas" width="1200" height="700"></canvas>
+        <canvas id="canvas" width="640" height="400"></canvas>
     </body>
 </html>
