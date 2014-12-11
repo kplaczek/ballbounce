@@ -81,6 +81,7 @@ Game.prototype.random = function (min, max) {
 };
 Game.prototype.calculate = function () {
     if (!game.isPaused) {
+        gamepad.handle();
         game.maxEnergy = game.totalEnergy = 0;
         for (var i = 0, e = game.balls.length; i < e; i++) {
             game.maxEnergy = Math.max(game.balls[i].getEnergy(), game.maxEnergy);
