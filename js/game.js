@@ -57,6 +57,8 @@ Game.prototype.update = function () {
         frameTime += (thisFrameTime - frameTime) / filterStrength;
         lastLoop = thisLoop;
         game.canvas.draw();
+        game.calculate();
+        requestAnimationFrame(game.update);
     }
 };
 

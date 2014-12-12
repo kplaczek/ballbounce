@@ -40,13 +40,8 @@
 
 
 
-                var fpsDraw = 40;
-                var fpsCalculate = 40;
-
+                game.update();
                 setInterval(game.newOpponent, 4000);
-                setInterval(game.update, 1000 / fpsDraw);
-                setInterval(game.calculate, 1000 / fpsCalculate);
-                var fpsOut = document.getElementById('fps');
             };
         </script>
     </head>
