@@ -60,13 +60,5 @@ Gamepad.prototype.handle = function () {
             }
             gamepad.buttonPressed[button] = gamepad.gamepads[i].buttons[button].pressed
         }
-
-//        if (gamepad.gamepads[i].buttons[2].pressed && !gamepad.buttonPressed[2]) {
-//            turret.fire();
-//            gamepad.buttonPressed[2] = gamepad.gamepads[i].buttons[2].pressed;
-//        }
-//        if (gamepad.buttonPressed[2] !== gamepad.gamepads[i].buttons[2].pressed) {
-//            gamepad.buttonPressed[2] = gamepad.gamepads[i].buttons[2].pressed;
-//        }
     }
 };
