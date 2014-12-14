@@ -102,12 +102,11 @@ Canvas.prototype.drawPause = function () {
 Canvas.prototype.drawFps = function () {
     this.ctx.fillStyle = "black";
     this.ctx.font = "bold 15px Arial";
-    this.ctx.fillText((1000 / frameTime).toFixed(1) + " fps", this.boundaries.left+5, this.boundaries.top+15, 300);
+    this.ctx.fillText((1000 / frameTime).toFixed(1) + " fps", this.boundaries.left + 5, this.boundaries.top + 15, 300);
 };
 
-Canvas.prototype.draw = function (object) {
+Canvas.prototype.draw = function () {
     this.clear();
-    this.ctx.fillStyle = "red";
     if (game.balls.length > 0)
         for (ball in game.balls) {
             var object = game.balls[ball];
@@ -132,7 +131,7 @@ Canvas.prototype.draw = function (object) {
     this.drawTurret();
     this.drawScoreboard(game.scoreBoard);
     this.drawCursor();
-	this.drawFps();
+    this.drawFps();
 };
 
 Canvas.prototype.drawTurret = function () {

@@ -58,8 +58,8 @@ Game.prototype.update = function () {
         lastLoop = thisLoop;
         game.canvas.draw();
         game.calculate();
-        requestAnimationFrame(game.update);
     }
+    requestAnimationFrame(game.update);
 };
 
 Game.prototype.newOpponent = function () {
@@ -75,6 +75,7 @@ Game.prototype.newOpponent = function () {
         var velocity = positionOfBottom.subtract(opponent.position).unit().multiply(game.random(1, 4));
         opponent.velocity = velocity;
         game.addOpponents(opponent);
+        setTimeout(game.newOpponent, game.random(3000, 4000));
     }
 };
 Game.prototype.random = function (min, max) {
