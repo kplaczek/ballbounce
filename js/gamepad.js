@@ -2,6 +2,8 @@ function Gamepad() {
     this.gamepads = [];
     this.buttonPressed = [];
     this.prevstate = false;
+    //is any gamepad connected
+    this.isGamepad = false;
 
     window.addEventListener("gamepadconnected", function (e) {
         gamepad.gamepadHandler(e, true);
@@ -14,9 +16,12 @@ function Gamepad() {
 Gamepad.prototype.gamepadHandler = function (event, connecting) {
 
     if (connecting) {
+        gamepad.isGamepad = true;
         gamepad.gamepads[event.gamepad.index] = event.gamepad;
     } else {
-        delete gamepad.gamepads[event.gamepad.index];
+        gamepad.gamepads.splice(event.gamepad.index, 1);
+        if (gamepad.gamepads.length < 1)
+            gamepad.isGamepad = false;
     }
 };
 
@@ -54,7 +59,7 @@ Gamepad.prototype.handle = function () {
                         game.togglePause();
                         break;
                     default:
-                        
+
                         break;
                 }
             }

@@ -33,21 +33,22 @@ Canvas.prototype.mousemove = function (event) {
 };
 
 Canvas.prototype.drawCursor = function () {
+    if (!gamepad.isGamepad) {
+        this.ctx.beginPath();
+        this.ctx.moveTo(canvas.cursorX - 5, canvas.cursorY);
+        this.ctx.lineTo(canvas.cursorX + 5, canvas.cursorY);
+        this.ctx.stroke();
 
-    this.ctx.beginPath();
-    this.ctx.moveTo(canvas.cursorX - 5, canvas.cursorY);
-    this.ctx.lineTo(canvas.cursorX + 5, canvas.cursorY);
-    this.ctx.stroke();
+        this.ctx.beginPath();
+        this.ctx.moveTo(canvas.cursorX, canvas.cursorY - 5);
+        this.ctx.lineTo(canvas.cursorX, canvas.cursorY + 5);
+        this.ctx.stroke();
 
-    this.ctx.beginPath();
-    this.ctx.moveTo(canvas.cursorX, canvas.cursorY - 5);
-    this.ctx.lineTo(canvas.cursorX, canvas.cursorY + 5);
-    this.ctx.stroke();
-
-    canvas.ctx.beginPath();
-    canvas.ctx.fillStyle = "rgba(0, 0, 0, 1)";
-    canvas.ctx.arc(canvas.cursorX, canvas.cursorY, 2, 0, Math.PI * 2);
-    canvas.ctx.fill();
+        canvas.ctx.beginPath();
+        canvas.ctx.fillStyle = "rgba(0, 0, 0, 1)";
+        canvas.ctx.arc(canvas.cursorX, canvas.cursorY, 2, 0, Math.PI * 2);
+        canvas.ctx.fill();
+    }
 };
 
 Canvas.prototype.drawScoreboard = function (scoreboard) {
