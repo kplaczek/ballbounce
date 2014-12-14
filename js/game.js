@@ -15,8 +15,7 @@ function Game() {
     window.addEventListener("keydown", function (e) {
         if (e.keyCode === 80) {
             e.preventDefault();
-            game.isPaused = (game.isPaused + 1) % 2;
-            canvas.drawPause();
+            game.togglePause();
         }
         if (e.keyCode === 70) {
             e.preventDefault();
@@ -28,6 +27,11 @@ function Game() {
         }
     });
 }
+
+Game.prototype.togglePause = function () {
+    game.isPaused = (game.isPaused + 1) % 2;
+    canvas.drawPause();
+};
 
 Game.prototype.setCanvas = function (canvas) {
     this.canvas = canvas;
@@ -59,6 +63,7 @@ Game.prototype.update = function () {
         game.canvas.draw();
         game.calculate();
     }
+    gamepad.handle();
     requestAnimationFrame(game.update);
 };
 
@@ -83,8 +88,8 @@ Game.prototype.random = function (min, max) {
 
 };
 Game.prototype.calculate = function () {
+
     if (!game.isPaused) {
-        gamepad.handle();
         game.maxEnergy = game.totalEnergy = 0;
         for (var i = 0, e = game.balls.length; i < e; i++) {
             game.maxEnergy = Math.max(game.balls[i].getEnergy(), game.maxEnergy);
