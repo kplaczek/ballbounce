@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
@@ -35,3 +36,58 @@
   
   </body>
 </html>
+=======
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ball bounce index page</title>
+        <meta charset="UTF-8">
+        <script type="text/javascript" type="text/javascript">
+            var BallBounce = {};
+        </script>
+        <style>
+            canvas {border: 1px solid black; cursor: none}
+        </style>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="js/setting.js"></script>
+        <script type="text/javascript" src="js/canvas.js"></script>
+        <script type="text/javascript" src="js/game.js"></script>
+        <script type="text/javascript" src="js/vector.js"></script>
+        <script type="text/javascript" src="js/ball.js"></script>
+        <script type="text/javascript" src="js/turret.js"></script>
+        <script type="text/javascript" src="js/sound.js"></script>
+        <script type="text/javascript" src="js/scoreboard.js"></script>
+        <script type="text/javascript" src="js/gamepad.js"></script>
+        <script type="text/javascript">
+            window.onload = function () {
+                gamepad = new Gamepad();
+
+                settings = new Setting();
+                game = new Game();
+                canvas = new Canvas();
+                game.setCanvas(canvas);
+                turret = new Turret();
+                game.setTurret(turret);
+                sound = new Sound();
+                game.setSound(sound);
+
+                filterStrength = 20;
+                frameTime = 0;
+                lastLoop = new Date;
+                thisLoop = 0;
+
+
+
+                game.update();
+                setInterval(game.newOpponent, 4000);
+            };
+        </script>
+    </head>
+    <body>
+        <input id="volume" type="range" min ="0" max="100" step="1" value="100"/> 
+        <br>
+        <canvas id="canvas" width="640" height="512"></canvas>
+    </body>
+</html>
+>>>>>>> refs/remotes/origin/master
